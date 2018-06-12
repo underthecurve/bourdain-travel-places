@@ -2,7 +2,7 @@ library('dplyr')
 library('readr')
 library('ggplot2')
 library('reshape2')
-library('RColorBrewer')
+library('ggalt')
 
 places <- read_csv('bourdain_travel_places.csv')
 lat.long <- colsplit(places$coordinates, ",", names = c("lat", "long"))
@@ -50,6 +50,15 @@ gmap.formatted
 
 ggsave('bourdain_travel_map.png', width = 6, height = 4.5)
 
+# a different projection and look, via https://cfss.uchicago.edu/dataviz_geospatial.html#geospatial_visualization
+gmap.formatted +  ggthemes::theme_map() +
+  coord_map(projection = "mollweide", xlim = c(-180, 180))
+
+# robinson projection via https://gis.stackexchange.com/questions/44387/use-proj4-to-specify-robinson-projection-with-r-ggmap-and-ggplot2-packages
+# see also https://www.jessesadler.com/post/gis-with-r-intro/
+gmap.formatted + coord_proj("+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs")
+
+ggsave('bourdain_travel_map_robinson.png', width = 6, height = 4.5)
 
 ## US Map with states - to be added
 
