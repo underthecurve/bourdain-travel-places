@@ -51,8 +51,13 @@ gmap.formatted
 ggsave('bourdain_travel_map.png', width = 6, height = 4.5)
 
 # a different projection and look, via https://cfss.uchicago.edu/dataviz_geospatial.html#geospatial_visualization
-gmap.formatted +  ggthemes::theme_map() +
-  coord_map(projection = "mollweide", xlim = c(-180, 180))
+gmap.formatted + 
+  coord_map(projection = "polyconic") # too crazy-looking
+
+gmap.formatted + 
+  coord_map(projection = "mollweide", xlim=c(-180, 180)) # better 
+
+ggsave('bourdain_travel_map_mollweide.png', width = 6, height = 4.5)
 
 # robinson projection via https://gis.stackexchange.com/questions/44387/use-proj4-to-specify-robinson-projection-with-r-ggmap-and-ggplot2-packages
 # see also https://www.jessesadler.com/post/gis-with-r-intro/
